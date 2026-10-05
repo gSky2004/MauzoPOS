@@ -110,11 +110,10 @@ const getRangeReport = async (db, { start, end, sections: rawSections, generated
       collections.push({ created_at: p.created_at, amount });
     }
     const { rows: customers } = await db.query('SELECT id FROM shop_customers ORDER BY created_at DESC');
-    const states = [];
-    for (const c of customers) {
-      const state = await getCustomerCreditState(db, c.id);
-      if (state) states.push(state);
-    }
+    // Independent per-customer states — resolve concurrently (see note in
+    // shopCustomerController.aging: sequential loops crawl on hosted DBs).
+    const settled = await Promise.all(customers.map((c) => getCustomerCreditState(db, c.id)));
+    const states = settled.filter(Boolean);
     const owing = states.filter((x) => x.total_remaining > 0);
     const overdue = states.filter((x) => x.overdue);
     data.credit = {

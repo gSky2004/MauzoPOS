@@ -174,12 +174,10 @@ const profitSummary = async (start, end) => {
 
 const customerStates = async () => {
   const { rows } = await query('SELECT id FROM shop_customers ORDER BY created_at DESC');
-  const states = [];
-  for (const c of rows) {
-    const st = await getCustomerCreditState({ query }, c.id);
-    if (st) states.push(st);
-  }
-  return states;
+  // Independent per-customer states — resolve concurrently (sequential loops
+  // crawl on hosted databases where each round trip costs real latency).
+  const settled = await Promise.all(rows.map((c) => getCustomerCreditState({ query }, c.id)));
+  return settled.filter(Boolean);
 };
 
 const debtOverview = async (limit = 8) => {

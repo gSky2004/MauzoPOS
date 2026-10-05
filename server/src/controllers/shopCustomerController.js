@@ -148,11 +148,13 @@ const aging = asyncHandler(async (req, res) => {
     `SELECT c.*, COALESCE((SELECT SUM(s.total) FROM sales s WHERE s.customer_id = c.id),0)::numeric(12,2) AS total_bought
      FROM shop_customers c ORDER BY c.created_at DESC`
   );
-  const states = [];
-  for (const customer of rows) {
-    const state = await getCustomerCreditState({ query }, customer.id);
-    if (state) states.push(state);
-  }
+  // States resolve independently — run them concurrently instead of one
+  // customer at a time. On hosted databases each round trip costs real
+  // latency, so sequential loops made this endpoint crawl.
+  const settled = await Promise.all(
+    rows.map((customer) => getCustomerCreditState({ query }, customer.id))
+  );
+  const states = settled.filter(Boolean);
   const owing = states.filter((s) => s.total_remaining > 0);
   const overdue = owing.filter((s) => s.status === 'overdue');
   const dueSoon = owing.filter((s) => s.status === 'due_soon');
