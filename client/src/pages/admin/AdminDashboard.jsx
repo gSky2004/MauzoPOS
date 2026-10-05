@@ -8,11 +8,11 @@ import { BarChart } from '../../components/charts/BarChart';
 import { formatTZS } from '../../utils/helpers';
 
 const StatCard = ({ label, value, icon: Icon, tint }) => (
-  <div className="card flex items-center gap-4 p-5">
+  <div className="card group flex items-center gap-4 p-5" title={String(value)}>
     <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl ${tint}`}><Icon className="h-6 w-6" /></span>
     <div className="min-w-0">
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>
-      <p className="truncate font-display text-xl font-bold text-slate-900">{value}</p>
+      <p className="truncate font-display text-xl font-bold text-slate-900 group-hover:whitespace-normal">{value}</p>
     </div>
   </div>
 );
