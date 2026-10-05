@@ -1,10 +1,19 @@
 const { Pool } = require('pg');
 const env = require('../config/env');
 
+// Hosted Postgres (Supabase and friends) requires TLS. Local Postgres does
+// not speak it, so SSL turns on only when asked: PGSSL=true, sslmode=require
+// in the URL, or a known hosted hostname.
+const wantsSsl =
+  String(process.env.PGSSL || '').toLowerCase() === 'true' ||
+  /sslmode=require/i.test(env.databaseUrl || '') ||
+  /(supabase\.co|neon\.tech|render\.com)/i.test(env.databaseUrl || '');
+
 const pool = new Pool({
   connectionString: env.databaseUrl,
-  max: 10,
+  max: Number(process.env.PGPOOL_MAX || 10),
   idleTimeoutMillis: 30000,
+  ...(wantsSsl ? { ssl: { rejectUnauthorized: false } } : {}),
 });
 
 pool.on('error', (err) => {
