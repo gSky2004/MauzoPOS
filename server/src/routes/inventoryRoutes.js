@@ -6,6 +6,7 @@ const env = require('../config/env');
 const inventoryController = require('../controllers/inventoryController');
 const supplierController = require('../controllers/supplierController');
 const { authenticateUser, authorizeRole } = require('../middleware/auth');
+const resizeUpload = require('../middleware/resizeUpload');
 const validate = require('../middleware/validate');
 const { body } = require('express-validator');
 
@@ -51,7 +52,7 @@ router.post('/adjust', authenticateUser, authorizeRole('ADMIN'), [
   body('product_id').isUUID().withMessage('Valid product required'),
   body('quantity').isInt({ min: -1000000, max: 1000000 }).withMessage('Adjustment must be a whole number'),
 ], validate, inventoryController.adjust);
-router.post('/receive', authenticateUser, authorizeRole('ADMIN'), upload.single('invoice'), receiveValidator, validate, inventoryController.receive);
+router.post('/receive', authenticateUser, authorizeRole('ADMIN'), upload.single('invoice'), resizeUpload, receiveValidator, validate, inventoryController.receive);
 
 // Velocity-based replenishment: buying prices/costs visible, ADMIN only.
 router.get('/replenishment', authenticateUser, authorizeRole('ADMIN'), inventoryController.replenishment);

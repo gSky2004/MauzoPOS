@@ -5,6 +5,7 @@ const fs = require('fs');
 const env = require('../config/env');
 const damageController = require('../controllers/damageController');
 const { authenticateUser, authorizeRole } = require('../middleware/auth');
+const resizeUpload = require('../middleware/resizeUpload');
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
 
 router.get('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), damageController.list);
-router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('photo'), damageController.report);
+router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('photo'), resizeUpload, damageController.report);
 router.put('/:id/review', authenticateUser, authorizeRole('ADMIN'), damageController.review);
 
 module.exports = router;

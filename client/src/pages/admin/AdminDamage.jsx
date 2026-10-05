@@ -40,7 +40,7 @@ const AdminDamage = () => {
       <div className="grid gap-2">
         {visible.map((d) => (
           <div key={d.id} className="card flex items-center gap-3 p-4">
-            {d.photo && <img src={d.photo} alt="" className="h-14 w-14 rounded-xl object-cover" />}
+            {d.photo && <img src={d.photo} alt="" loading="lazy" decoding="async" className="h-14 w-14 rounded-xl object-cover" />}
             <div className="flex-1"><p className="text-sm font-bold">{d.product_name} × {d.quantity}</p><p className="text-xs text-slate-400">{reasonLabel(t, d.reason)} · {d.reporter_name || ''} · {new Date(d.created_at).toLocaleDateString(loc)}</p></div>
             {d.reviewed ? <span className="text-xs font-bold text-emerald-600">{t.pos.dmgAdmin.reviewed}</span> : <button onClick={() => review(d.id)} className="btn-ghost !px-3 !py-1.5 text-xs">{t.pos.dmgAdmin.markReviewed}</button>}
           </div>

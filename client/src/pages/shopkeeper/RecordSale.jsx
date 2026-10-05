@@ -169,7 +169,7 @@ const RecordSale = () => {
                 {items.map((p) => (
             <div key={p.id} className="card flex flex-col overflow-hidden transition hover:shadow-lift">
               {p.main_image ? (
-                <img src={p.main_image} alt={p.name} className="h-32 w-full object-cover" />
+                <img src={p.main_image} alt={p.name} loading="lazy" decoding="async" className="h-32 w-full object-cover" />
               ) : (
                 <div className="grid h-32 w-full place-items-center bg-slate-100"><Package className="h-10 w-10 text-slate-300" /></div>
               )}

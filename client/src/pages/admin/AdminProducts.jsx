@@ -71,7 +71,7 @@ const AdminProducts = () => {
                 <tr key={p.id} className="border-b border-slate-50 hover:bg-slate-50/50">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      {p.main_image && <img src={p.main_image} alt="" className="h-10 w-10 rounded-lg object-cover" />}
+                      {p.main_image && <img src={p.main_image} alt="" loading="lazy" decoding="async" className="h-10 w-10 rounded-lg object-cover" />}
                       <span className="font-semibold text-slate-800">{p.name}</span>
                     </div>
                   </td>

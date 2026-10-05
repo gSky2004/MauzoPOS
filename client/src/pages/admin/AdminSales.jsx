@@ -58,7 +58,7 @@ const AdminSales = () => {
         {detail && (
           <div className="space-y-2">
             <p className="text-sm text-slate-500">{new Date(detail.sale.created_at).toLocaleString(loc)}</p>
-            {detail.sale.evidence_photo && <img src={detail.sale.evidence_photo} alt="evidence" className="w-full rounded-xl object-cover" />}
+            {detail.sale.evidence_photo && <img src={detail.sale.evidence_photo} alt="evidence" loading="lazy" decoding="async" className="w-full rounded-xl object-cover" />}
             {detail.items.map((it) => (
               <div key={it.id} className="flex justify-between rounded-xl border border-slate-100 p-3 text-sm">
                 <span>{it.product_name} × {it.quantity} @ {formatTZS(it.unit_price)}</span>

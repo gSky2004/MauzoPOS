@@ -5,6 +5,7 @@ const fs = require('fs');
 const env = require('../config/env');
 const productController = require('../controllers/productController');
 const { authenticateUser, authorizeRole, optionalAuth } = require('../middleware/auth');
+const resizeUpload = require('../middleware/resizeUpload');
 const validate = require('../middleware/validate');
 const { productValidator } = require('../validators/validators');
 
@@ -39,8 +40,8 @@ router.get(
 router.get('/:slug', optionalAuth, productController.getBySlug);
 
 router.use(authenticateUser, authorizeRole('ADMIN'));
-router.post('/', upload.array('images', 6), productValidator, validate, productController.create);
-router.put('/:id', upload.array('images', 6), productValidator, validate, productController.update);
+router.post('/', upload.array('images', 6), resizeUpload, productValidator, validate, productController.create);
+router.put('/:id', upload.array('images', 6), resizeUpload, productValidator, validate, productController.update);
 router.delete('/:id', productController.remove);
 
 module.exports = router;

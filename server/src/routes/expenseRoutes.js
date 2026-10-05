@@ -5,6 +5,7 @@ const fs = require('fs');
 const env = require('../config/env');
 const expenseController = require('../controllers/expenseController');
 const { authenticateUser, authorizeRole } = require('../middleware/auth');
+const resizeUpload = require('../middleware/resizeUpload');
 const validate = require('../middleware/validate');
 const { body } = require('express-validator');
 
@@ -30,7 +31,7 @@ router.post('/categories', authenticateUser, authorizeRole('ADMIN'), [body('name
 
 router.get('/summary', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), expenseController.summary);
 router.get('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), expenseController.list);
-router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('receipt'), expenseController.create);
+router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('receipt'), resizeUpload, expenseController.create);
 router.put('/:id', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), expenseController.update);
 router.delete('/:id', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), expenseController.destroy);
 

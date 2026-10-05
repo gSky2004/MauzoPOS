@@ -5,6 +5,7 @@ const fs = require('fs');
 const env = require('../config/env');
 const saleController = require('../controllers/saleController');
 const { authenticateUser, authorizeRole } = require('../middleware/auth');
+const resizeUpload = require('../middleware/resizeUpload');
 const validate = require('../middleware/validate');
 const { body } = require('express-validator');
 
@@ -34,7 +35,7 @@ const saleValidator = [
   }),
 ];
 
-router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('evidence'), saleValidator, validate, saleController.create);
+router.post('/', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), upload.single('evidence'), resizeUpload, saleValidator, validate, saleController.create);
 router.get('/today', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), saleController.today);
 router.get('/mine', authenticateUser, authorizeRole('ADMIN', 'SHOPKEEPER'), saleController.mine);
 router.get('/', authenticateUser, authorizeRole('ADMIN'), saleController.all);

@@ -217,7 +217,7 @@ const AdminProductForm = () => {
           <div className="flex flex-wrap gap-3">
             {existingImages.map((url, i) => (
               <div key={i} className="relative h-20 w-20">
-                <img src={url} alt="" className="h-20 w-20 rounded-xl object-cover" />
+                <img src={url} alt="" loading="lazy" decoding="async" className="h-20 w-20 rounded-xl object-cover" />
                 <button type="button" onClick={() => setExistingImages(existingImages.filter((_, j) => j !== i))} className="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-red-500 text-xs text-white">✕</button>
               </div>
             ))}
