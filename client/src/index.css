@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600;
+  }
+  .btn-primary {
+    @apply btn bg-green-600 text-white hover:bg-green-700 hover:shadow-lift active:scale-[0.98];
+  }
+  .btn-dark {
+    @apply btn bg-slate-900 text-white hover:bg-slate-800 hover:shadow-lift active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply btn border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply btn bg-slate-100 text-slate-800 hover:bg-slate-200;
+  }
+  .input {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 placeholder-slate-400 transition-colors focus:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-100;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-slate-700;
+  }
+  .card {
+    @apply rounded-2xl bg-white shadow-card;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .invoice,
+  .invoice * {
+    visibility: visible;
+  }
+  .invoice {
+    position: absolute;
+    inset: 0;
+    box-shadow: none;
+  }
+  .invoice .no-print {
+    display: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark theme — centralized surface remapping so every page follows the
+   toggle without per-file dark: variants. Brand greens stay untouched. */
+.dark {
+  color-scheme: dark;
+}
+.dark body {
+  background-color: #020617;
+}
+.dark .card {
+  background-color: #0f172a;
+}
+.dark .bg-white {
+  background-color: #0f172a;
+}
+.dark .bg-slate-50 {
+  background-color: #020617;
+}
+.dark .bg-slate-100 {
+  background-color: #1e293b;
+}
+.dark .bg-slate-200 {
+  background-color: #334155;
+}
+.dark .text-slate-900,
+.dark .text-slate-800 {
+  color: #f1f5f9;
+}
+.dark .text-slate-700,
+.dark .text-slate-600 {
+  color: #cbd5e1;
+}
+.dark .text-slate-500,
+.dark .text-slate-400 {
+  color: #94a3b8;
+}
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300 {
+  border-color: #334155;
+}
+.dark .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #1e293b;
+}
+.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #334155;
+}
+.dark .input {
+  background-color: #1e293b;
+  border-color: #475569;
+  color: #f1f5f9;
+}
+.dark .input::placeholder {
+  color: #64748b;
+}
+.dark .label {
+  color: #cbd5e1;
+}
+.dark .btn-ghost {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+.dark .btn-ghost:hover {
+  background-color: #334155;
+}
+.dark .hover\:bg-slate-100:hover {
+  background-color: #1e293b;
+}
+.dark .hover\:text-slate-900:hover,
+.dark .hover\:text-slate-800:hover {
+  color: #f1f5f9;
+}
+.dark select.input option {
+  background-color: #1e293b;
+}

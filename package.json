@@ -1,0 +1,13 @@
+{
+  "name": "gsky-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gsky Sport Shoes backend - builds and runs the Express API from server/",
+  "scripts": {
+    "build": "npm --prefix server install",
+    "start": "npm --prefix server start"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

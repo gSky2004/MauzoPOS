@@ -1,0 +1,58 @@
+# Render Blueprint - Gsky Sport Shoes (backend only)
+# The PostgreSQL database is external (free Neon), so Render just runs the API.
+# Deploy: Render dashboard -> "New +" -> "Blueprint" -> select this repo.
+# After creation, set DATABASE_URL (from Neon) + SMTP_PASS in the service's
+# "Environment" tab.
+
+services:
+  - type: web
+    name: gsky-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CLIENT_URLS
+        value: https://gsky.vercel.app,http://localhost:5173
+      - key: UPLOAD_DIR
+        value: uploads
+      - key: PAYMENT_PROVIDER
+        value: sandbox
+      - key: PAYMENT_SANDBOX_AUTO_CONFIRM
+        value: "true"
+      - key: EMAIL_PROVIDER
+        value: smtp
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        value: mwansisyagasper2004@gmail.com
+      - key: SMTP_PASS
+        sync: false
+      - key: CONTACT_TO_EMAIL
+        value: mwansisyagasper2004@gmail.com
+      - key: CONTACT_FROM_NAME
+        value: Gsky Sport Shoes
+      - key: ADMIN_NAME
+        value: Gsky Admin
+      - key: ADMIN_EMAIL
+        value: admin@gskyshoes.co.tz
+      - key: ADMIN_PHONE
+        value: "0675029833"
+      - key: WHATSAPP_NUMBER
+        value: "0675029833"

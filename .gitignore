@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+dist-ssr/
+.vite/
+
+# Environment (never commit secrets — any .env at any level)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# User uploads (evidence photos, invoices, product images — business data,
+# never belongs in git; the server recreates the folder at boot)
+uploads/
+server/uploads/
+client/public/uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Test coverage
+coverage/
+
+# Deploy artifacts
+gsky-deploy.zip
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
